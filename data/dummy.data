@@ -1,0 +1,9 @@
+Put your JS data objects in this folder and import them into your tests 
+
+
+export default {
+  
+  dataItem1: "data",
+
+  dataItem2: 34
+}
