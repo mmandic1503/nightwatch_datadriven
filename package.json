@@ -20,6 +20,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/qualityworksjmmb/nightwatch_starter#readme",
   "dependencies": {
+    "chromedriver": "^2.26.1",
     "nightwatch": "^0.9.11",
     "selenium-server-standalone-jar": "^3.0.1"
   },
