@@ -1,0 +1,25 @@
+{
+  "name": "nightwatch_starter",
+  "version": "1.0.0",
+  "description": "Nightwatch.js ES2015 starter project.",
+  "main": "nightwatch.json",
+  "scripts": {
+    "test": "nightwatch -e"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/qualityworksjmmb/nightwatch_starter.git"
+  },
+  "keywords": [
+    "QualityWorks",
+    "Nightwatch.js",
+    "Web",
+    "Automation"
+  ],
+  "author": "QualityWorks CG",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/qualityworksjmmb/nightwatch_starter#readme",
+  "dependencies": {
+    "nightwatch": "^0.9.11"
+  }
+}
