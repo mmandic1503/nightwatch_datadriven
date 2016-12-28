@@ -1,0 +1,11 @@
+# Mac Specific
+.DS_Store
+
+# Nightwatch
+reports
+screenshots
+
+# Node
+node_modules
+npm-debug.log
+selenium-debug.log
