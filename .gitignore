@@ -9,3 +9,4 @@ screenshots
 node_modules
 npm-debug.log
 selenium-debug.log
+.idea/
