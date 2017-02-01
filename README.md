@@ -7,7 +7,7 @@
 Clone automation repo repository:
 ```
 $ git clone <automation_repo>
-$ cd miss_america
+$ cd <automation_repo>
 $ npm install
 ```
 
