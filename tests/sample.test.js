@@ -10,9 +10,9 @@ export default {
   /**
    * Nightwatch functions generally take a browser parameter to interact with th ebrowser
   */
-
-  //
-  before: browser => { browser.maximizeWindow(); },
+  before(browser) {
+    browser.maximizeWindow();
+  },
 
   'Testing the Title of QualityWorks Homepage': browser => {
 
@@ -28,5 +28,7 @@ export default {
   },
 
   // Close the browser after test completion, failure or timeout
-  after: browser => { browser.end(); }
+  after(browser) {
+    browser.end();
+  }
 }
