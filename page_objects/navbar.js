@@ -26,7 +26,7 @@ const commands = {
 
         //Use the custom command to wait for an element to be visible then click it 
 
-        this.waitedClick('@agileCoachingLink', 'The Agile coaching link was clicked')
+        this.waitThenClick('@agileCoachingLink', 'The Agile coaching link was clicked')
       });
   }
 }
