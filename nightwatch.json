@@ -20,6 +20,13 @@
       "webdriver.ie.driver": ""
     }
   },
+  "test_runner": {
+    "type": "mocha",
+    "options": {
+      "ui": "bdd",
+      "reporter": "list"
+    }
+  },
   "test_settings": {
     "default": {
       "launch_url": "http://www.qualityworkscg.com/",
