@@ -1,186 +1,129 @@
-# Nightwatch Starter
+# Nightwatch Data-Driven
 
-***
-
-### Getting Started
-
-Clone automation repo repository:
-```
-$ git clone <automation_repo>
-$ cd <automation_repo>
-$ npm install
-```
-
-### Environment
-Ensure that the following are installed and available on your path.  
-**Java  
-node.js   
-npm**
-
-
-** Note: ** Ensure ** Firefox v45.0.2 ** or ** higher ** is installed.  
-** Note: ** Ensure ** Google Chrome is installed
-
-### Running Tests
-Running all the tests
-```sh
-$ npm test
-```
-Running test groups
-```sh
-$ npm run group admin
-```
-Running a single test file
-```sh
-npm run spec ./tests/contestant/email.test.js
-```
-### Git Workflow 
+Nightwatch's built in test runner does not offer support for data-driven tests. Mocha however, can easily be used to overcome this shortcoming. Using Mocha for data-driven tests invloves running Mocha test functions in a loop, or using a method such as a forEach() to iterate over a data set.
 
 ```
-
-                     +----------------+
-              +------> featurebranch-1 +-----------+ (pull request)
-              |      +----------------+            |
-              |                                    |
-  +--------+  |                                    +---------+
-  | master + -                                     |  master |
-  +----+---+  |                                    +---------+  
-              |                                    |
-              |      +-----------------+           |            
-              +------> featurebranch-2 +-----------+  (pull request)
-                    +------------------+
-```
-
-
-When working on a new feature:
-
-1. Create a new branch that branches off the `master` branch.
-2. Complete the feature/work and submit a pull request to be merged into `master`.
-
-### Page Objects
-
-#### Creating Page Objects
-
-Elements should be defined in the **elements object**
-
-```js
-// Selectors
-const elements = {
-  txtUsername      : { selector: 'input[name="username"]'},
-  txtPassword      : { selector: 'input[name="password"]'},
-};
-```
-
-Page object template
-
-```js
-/**
-*
-*/
-const elements = {
-};
-
-const commands = {
-};
-
-export default {
-  url: function () { return `${this.api.launchUrl}[route_name]`; },
-  commands: [commands],
-  elements: elements
-};
-```
-
-
-
-#### Finding Selectors
-
-* `ID`'s are best to use as selectors.
-* Xpath can be used where complexity is a concern
-* Luckily there is [CSS 3 selectors](http://www.w3schools.com/cssref/trysel.asp?selector=[id*=s]) which makes life easier
-* Most components will have an unique identifier in class name (use contains with xpath or css) :white_check_mark:
-
-##### Using Xpath
-
-```js
-// very bad
-const elements = {
-  scheduleContainer : { selector: './/*[@class="node_modules--diamondla-dcg-shared-react-lib-components-LiveSchedule-___LiveSchedule__scheduleContainer___3q6We', locateStrategy:'xpath'}
-};
-
-// good
-const elements = {
-   scheduleContainer : { selector: '//div[contains(@class, "scheduleContainer")]', locateStrategy: 'xpath'} 
-};
-```
-
-##### Using CSS 3
-
-```js
-// very bad
-const elements = {
-  headLine : { selector: 'h2[class="src-app-themes-___LiveSchedule__headline___3yUlj node_modules--diamondla-dcg-shared-react-lib-components-LiveSchedule-___LiveSchedule__headline___3VZBr node_modules--diamondla-dcg-shared-react-lib-stylesheets-___objects-isolation__component___bLyEg node_modules--diamondla-dcg-shared-react-lib-stylesheets-___objects-isolation__reset___38kVl"]'}
-};
-
-// good
-const elements = {
-   headLine : { selector: 'h2[class*="headline"]'} 
-};
-```
-
-#### Custom Commands
-
-```js
-/**
- * Use to switch between windows/tabs
- */
-export function command(tab) {
-  return this
-    .window_handles(function (result) {
-      const newHandle = result.value[tab];
-      this.switchWindow(newHandle);
+  const x = ['Test 1', 'Test 2', 'Test 3']
+  x.forEach(testName => {
+    it(`${testName}`, function (browser) {
+      const navbar = browser.page.navbar()
+      navbar
+        .navigate()
+        .clickAgileCoachingLink()
+        .assert.title('QualityWorks Consulting Group | Agile Coaching and Training')
     });
-};
+  });
+  ```
+### How to Setup Nightwatch to use data-driven tests
+
+Taken from [nightwatchjs.org/guide#using-mocha](http://nightwatchjs.org/guide#using-mocha)
+
+Starting with version 0.8 Nightwatch is bundled with a custom version of the popular Mocha test runner which allows running tests using Mocha, thus taking advantage of its interfaces and reporters.
+
+Usage
+
+There are two main ways in which you can use Mocha with Nightwatch.
+
+Mocha is used as an alternative test runner to the built-in one. This is done by specifying the "test_runner" option in the nightwatch.json configuration file.
+
+Custom options can also be specified for Mocha:
 
 ```
+{
+  ...
+  "test_runner" : {
+    "type" : "mocha",
+    "options" : {
+      "ui" : "bdd",
+      "reporter" : "list"
+    }
+  }
+  ...
+}
+```
 
-Where applicable, use `sections` to easily provide element-level nesting. For example for to represent a complex parent-child relationship.(e.g menus)
+---
 
-An example of how `sections` can be used:
+**The test_runner option can also be specified at test environment level:**
 
-```js
-module.exports = {
-  sections: {
-    menu: {
-      selector: '#menu',
-      elements: {
-        change.password: {
-          selector: '#change_password'
-        },
-        logout: {
-          selector: '#logout'
+```
+{
+  "test_settings" : {
+    "mocha_tests" : {
+      "test_runner" : {
+        "type" : "mocha",
+        "options" : {
+          "ui" : "tdd",
+          "reporter" : "list"
         }
       }
     }
   }
-};
+  ...
+}
 ```
 
-#### Recording qualitywatcher results
+## Note
+**When using the mocha test runner from Nightwatch some cli options are not available, like --retries, --suiteRetries, --reporter.**
 
-[QualityWatcher](http://qualitywatcher.io/) is an executive level dashboard for monitoring overall test status and progress.  
-An example of a qualitywatcher report is shown below:
+## Data Source
 
-![qualitywatcher Report](https://res.cloudinary.com/dvvgdt5sz/image/upload/v1461433138/Screen_Shot_2016-04-23_at_12.37.53_PM_ojptyq.png)
+Data-driven tests generally require a data-source or data-set that will be inserted into your automation scripts during test execution. Common ways to store for your tests include:
+1. JSON files
+2. JavaScript Objects
+3. Spreadsheets
+4. CSV files
 
-____
+Spreadsheets tend to be a good option as they allow non-technical team-members to add tests scenarious.
 
-#### Node dependencies
-* babel-core 
-* babel-preset-es2015 babel-register 
-* babel-plugin-add-module-exports 
-* chalk 
-* chromedriver 
-* nightwatch 
-* faker
-* chance
-* selenium-server-standalone-jar
+#### Adding support for spreadsheets
+
+The [xlsx](https://www.npmjs.com/package/xlsx) npm module is a good option for using spreadsheets as your data-source. The xlsx module has many useful features, including functionality to export your spreadsheets as json arrays of objects. Each row from the spreadsheet will be a JavaScript object, each field can then be accessed as a property of that object.
+
+Simple function to get data from a spreadsheet and return a JSON array using xlsx
+```
+var XLSX = require('xlsx');
+var path = require('path')
+
+function getSheetData(fileName, sheetName) {
+  // Sets the file path for the spreadsheet.
+  var _filePath = path.join(__dirname, '../data/' + fileName + '.xlsx');
+  var _workbook = XLSX.readFile(_filePath);
+  var _sheetName = sheetName;
+  var _worksheet = _workbook.Sheets[_sheetName];
+  // Returns all rows in the sheet as a json object
+  return XLSX.utils.sheet_to_json(_worksheet);
+}
+```
+Iterate over the data-set in your tests and access object properties for test names and values
+
+```
+
+let data = sheet.getSheetData(`tests`, `prod_test-data`);
+ describe(function(){
+    it(`${data.TestName}`, function (client) {
+      ...
+      client.setValue(`#selector`, data.firstName)
+    }
+ })
+```
+
+## Running this project 
+#### Installing dependenicies
+   1. Ensure to have Node.js and NPM installed and available on your path
+   2. Ensure to have the Java JDK installed
+   3. Ensure to have google Chrome browser
+
+#### Running the tests
+Before you run the tests first you will need to install the JavaScript dependencies, so run the following command from the root folder (the folder with the package.json file)
+
+```
+npm install
+```
+After completing the installation run your tests with the following command
+
+```
+npm test
+```
+
+
