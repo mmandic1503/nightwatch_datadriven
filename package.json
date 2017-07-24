@@ -21,6 +21,7 @@
   "homepage": "https://bitbucket.org/qualityworksjmmb/nightwatch_starter#readme",
   "dependencies": {
     "chromedriver": "^2.29.0",
+    "moment": "^2.18.1",
     "nightwatch": "^0.9.15",
     "selenium-server-standalone-jar": "^3.4.0"
   },
