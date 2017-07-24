@@ -1,6 +1,6 @@
 
 describe('Mocha with nightwatch', function () {
-  const x = ['Test 1', 'Test 2']
+  const x = ['Test 1', 'Test 2', 'Test 3']
   x.forEach(testName => {
     it(`${testName}`, function (browser) {
       const navbar = browser.page.navbar();
