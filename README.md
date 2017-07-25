@@ -74,7 +74,7 @@ Data-driven tests generally require a data-source or data-set that will be inser
 3. Spreadsheets
 4. CSV files
 
-Spreadsheets tend to be a good option as they allow non-technical team-members to add tests scenarious.
+Spreadsheets tend to be a good option as they allow non-technical team-members to add tests scenarios.
 
 #### Adding support for spreadsheets
 
@@ -115,12 +115,12 @@ let data = sheet.getSheetData(`tests`, `prod_test-data`);
    3. Ensure to have google Chrome browser
 
 #### Running the tests
-Before you run the tests first you will need to install the JavaScript dependencies, so run the following command from the root folder (the folder with the package.json file)
+Before running the tests install the JavaScript dependencies. Run the following command from the root folder (the folder with the package.json file)
 
 ```
 npm install
 ```
-After completing the installation run your tests with the following command
+After completing the installation run the tests with the following command
 
 ```
 npm test
